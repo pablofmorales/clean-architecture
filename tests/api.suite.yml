@@ -3,7 +3,7 @@ modules:
     enabled:
         - REST:
             depends: PhpBrowser
-            url: http://localhost/api/
+            url: http://localhost:8000/
             shortDebugResponse: 300
             part: Json
 
