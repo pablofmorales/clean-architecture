@@ -57,12 +57,11 @@ $app->get('/applications/{appName}/health-check',
 
         $applicationHealthCheck = $container->get(ApplicationHealthCheckAction::class);
 
-        if ($applicationHealthCheck->confirm($appName)) {
-            $finalResponse = $response->withStatus(StatusCodeInterface::STATUS_ACCEPTED);
-        } else {
-            $finalResponse = $response->withStatus(StatusCodeInterface::STATUS_NOT_FOUND);
-        }
+        $statusCode = $applicationHealthCheck->confirm($appName)
+            ? StatusCodeInterface::STATUS_ACCEPTED
+            : StatusCodeInterface::STATUS_NOT_FOUND;
 
+        $finalResponse = $response->withStatus($statusCode);
         $finalResponse->getBody()
             ->write("{}");
 
